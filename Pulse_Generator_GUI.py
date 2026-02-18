@@ -56,22 +56,22 @@ def Create_pulse(pulse_generator,
                  gate: str = "DISABLED",
                  trigger: str = "DISABLED",) -> None:
 
-    pulse_generator.write(f":PULSE{channel}:STATE ON")            # Enables channel n
+    pulse_generator.write(f":PULSE{channel}:STATE ON")                             # Enables channel n
 
-    pulse_generator.write(f":PULSE{channel}:OUTP:AMPL {ampl_v}")  # Amplitude (V)
-    pulse_generator.write(f":PULSE{channel}:WIDT {width_s}")      # Pulsewidth (in s)
-    pulse_generator.write(f":PULSE{channel}:DELAY {delay_s}")     # Delay (in s)
-    pulse_generator.write(f":PULSE{channel}:WCOUNTER {wait_s}")   # Wait counter (in s)
+    pulse_generator.write(f":PULSE{channel}:OUTP:AMPL {ampl_v:.10f}")             # Amplitude (V)
+    pulse_generator.write(f":PULSE{channel}:WIDT {width_s:.10f}")                 # Pulsewidth (in s)
+    pulse_generator.write(f":PULSE{channel}:DELAY {delay_s:.10f}")                # Delay (in s)
+    pulse_generator.write(f":PULSE{channel}:WCOUNTER {wait_s:.10f}")              # Wait counter (in s)
 
-    pulse_generator.write(f":PULSE{channel}:MODE {mode}")         # Mode
-    pulse_generator.write(f":PULSE{channel}:POL {polarity}")      # Polarity
-    pulse_generator.write(f":PULSE{channel}:CGATE {gate}")        # Gate
+    pulse_generator.write(f":PULSE{channel}:MODE {mode}")                         # Mode
+    pulse_generator.write(f":PULSE{channel}:POL {polarity}")                      # Polarity
+    pulse_generator.write(f":PULSE{channel}:CGATE {gate}")                        # Gate
 
-    pulse_generator.write(f":PULSE0:EXT:MODE {trigger}")          # External trigger mode
-    pulse_generator.write(":PULSE0:MODE NORM")                    # System to continuous mode
-    pulse_generator.write(f":PULSE0:PER {period_s}")              # Sets Period (in s) 1/Freq
+    pulse_generator.write(f":PULSE0:EXT:MODE {trigger}")                          # External trigger mode
+    pulse_generator.write(":PULSE0:MODE NORM")                                    # System to continuous mode
+    pulse_generator.write(f":PULSE0:PER {period_s:.10f}")                         # Sets Period (in s) 1/Freq
 
-    pulse_generator.write(":PULSE0:STATE ON")                     # Start Pulse
+    pulse_generator.write(":PULSE0:STATE ON")                                     # Start Pulse
 
 
 class PulseThread(QThread):
@@ -319,7 +319,7 @@ class MainWindow(QWidget):
     def _freq_to_hz(self, value: float, unit: str) -> float:
         if unit == "Hz":
             return value
-        if unit == "kHz":
+        if unit == "KHz":
             return value * 1e3
         if unit == "MHz":
             return value * 1e6
@@ -392,7 +392,7 @@ class MainWindow(QWidget):
         self.log(f"Run n°{self.run_id} : {ts}")
         self.log(f"Channels: {ch_mask}")
         self.log("-" * 60)
-        
+
         # Format en grille : 2 colonnes
         col_width = 35
         space = 10
